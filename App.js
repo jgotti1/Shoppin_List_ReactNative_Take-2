@@ -1,9 +1,8 @@
-import {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import { View, TextInput, FlatList, ImageBackground, Alert, Text, TouchableOpacity, Linking  } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {LogBox} from 'react-native';
 import { Button } from "react-native-elements";
-import { useState } from "react";
 import ListItem from "./components/ListItem";
 import styles from "./styles.js";
 import ListInput from "./components/ListInput";
@@ -19,19 +18,28 @@ const version = Constants.expoConfig.ios.buildNumber
   const [item, setItem] = useState("");
   const [allItems, setAllItems] = useState([]);
   const [modalVisible, setModalVisible] = useState(false)
+  const [showText, setShowText]= useState(true)
 
  
+   
+  const sendSMSCheck = async () => {
+  const isAvailable = await SMS.isAvailableAsync();
+    if (isAvailable) {
+    setShowText(true)
+    console.log("SMS is available");
+  } else {
+   setShowText(false)
+    console.log("SMS is not available");
+  }
+};
 
   useEffect(() => {
     LogBox.ignoreLogs(['In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.']);
     loadItems()
     console.log(`memory loaded`)
+    sendSMSCheck(); // Call the sendSMS function when the component mounts
   }, [])
 
-
-
-
-  
   const saveItems = async (items) => {
   if (items === undefined || items === null) {
     console.log('Items is undefined or null')
@@ -44,8 +52,6 @@ const version = Constants.expoConfig.ios.buildNumber
   }
 }
 
-  
-  
   const loadItems = async () => {
   try {
     const itemsString = await AsyncStorage.getItem('items')
@@ -56,7 +62,6 @@ const version = Constants.expoConfig.ios.buildNumber
     console.log(error)
   }
 }
-
 
   const submitItem = () => {
     if (!item) {
@@ -69,7 +74,6 @@ const version = Constants.expoConfig.ios.buildNumber
      
     }
   };
-
 
   const itemInputHandler = (itemText) => {
     setItem(itemText);
@@ -149,7 +153,7 @@ const version = Constants.expoConfig.ios.buildNumber
           }}
             />
           </View>
-          <SendSMS allItems={allItems} />
+          {showText && <SendSMS allItems={allItems} />}
           <EraseItems setAllItems={setAllItems} />
     </View>
       </ImageBackground>

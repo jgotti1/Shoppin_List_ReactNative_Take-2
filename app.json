@@ -2,7 +2,7 @@
   "expo": {
     "name": "Easy Shopping Lists",
     "slug": "MyShoppingList",
-    "version": "2.1.0",
+    "version": "3.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,7 +15,7 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "2.1.0",
+      "buildNumber": "3.0.4",
       "supportsTablet": true,
       "bundleIdentifier": "com.Margotti.MyShoppingList"
     },
@@ -31,7 +31,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "5c02f4fd-58bd-4570-a815-a070c4a574e5"
+        "projectId": "f625686d-080f-44ca-bc6c-cc0fdc174e2a"
       }
     }
   }
