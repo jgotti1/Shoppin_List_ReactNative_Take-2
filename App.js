@@ -153,7 +153,7 @@ const version = Constants.expoConfig.ios.buildNumber
           }}
             />
           </View>
-          {showText && <SendSMS allItems={allItems} />}
+          {!showText && <SendSMS allItems={allItems} />}
           <EraseItems setAllItems={setAllItems} />
     </View>
       </ImageBackground>
