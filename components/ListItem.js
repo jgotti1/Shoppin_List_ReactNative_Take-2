@@ -1,7 +1,7 @@
 import {useState} from "react"
 import { View, Text, Pressable} from "react-native";
 import styles from "../styles";
-import { Checkbox} from "native-base";
+import { Checkbox } from "native-base";
 
 function ListItem({ handleDeleteItem, data }) {
 
@@ -13,7 +13,7 @@ function ListItem({ handleDeleteItem, data }) {
  
   return (
    
-
+ 
     <View style={styles.item}>
       {/* <Pressable style={({ pressed }) => pressed && styles.pressItem} onPress={handleDeleteItem.bind(this, data.key)}> */}
         <View style={styles.itemRow}>
@@ -30,6 +30,7 @@ function ListItem({ handleDeleteItem, data }) {
         </View> 
       {/* </Pressable> */}
     </View>
+
    
     
   );

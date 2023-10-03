@@ -41,14 +41,14 @@ function SmsSend({ allItems }) {
       const sendList = async (textNumber) => {
   
         try {
-          // const { result } = await SMS.sendSMSAsync([textNumber], itemsSMS);
+          const { result } = await SMS.sendSMSAsync([textNumber], itemsSMS);
           console.log(itemsSMS)
           console.log(textNumber)
-          // if (result === SMS.SentStatus.SENT) {
-          //   console.log('SMS sent successfully');
-          // } else {
-          //   console.log('Failed to send SMS');
-          // }
+          if (result === SMS.SentStatus.SENT) {
+            console.log('SMS sent successfully');
+          } else {
+            console.log('Failed to send SMS');
+          }
         } catch (error) {
          
           console.error('Error sending SMS:', error);
