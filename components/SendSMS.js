@@ -22,6 +22,7 @@ function SmsSend({ allItems }) {
     Alert.prompt(
       'Enter Phone Number',
       '\n Please enter a 10-digit numeric phone number and hit "ok" \n \nexample: 5551234567',
+      
       (phoneNumber) => {
         if (/^\d{10}$/.test(phoneNumber)) {
           setTextNumber(phoneNumber)

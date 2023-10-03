@@ -11,6 +11,7 @@ import SendSMS from "./components/SendSMS";
 import { NativeBaseProvider } from "native-base";
 import Constants from 'expo-constants';
 import * as SMS from 'expo-sms';
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function App() {
@@ -37,7 +38,7 @@ const version = Constants.expoConfig.ios.buildNumber
     LogBox.ignoreLogs(['In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.']);
     loadItems()
     console.log(`memory loaded`)
-    sendSMSCheck(); // Call the sendSMS function when the component mounts
+    sendSMSCheck(); 
   }, [])
 
   const saveItems = async (items) => {
@@ -120,6 +121,7 @@ const version = Constants.expoConfig.ios.buildNumber
   return (
     
     <NativeBaseProvider>
+      <StatusBar style="auto"  />
     <ImageBackground
     source={require('./assets/cart.jpg')}
     style={styles.modal}>
