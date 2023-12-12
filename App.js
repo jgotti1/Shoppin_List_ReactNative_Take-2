@@ -19,9 +19,10 @@ const version = Constants.expoConfig.ios.buildNumber
   const [item, setItem] = useState("");
   const [allItems, setAllItems] = useState([]);
   const [modalVisible, setModalVisible] = useState(false)
-  const [showText, setShowText]= useState(true)
+  const [showText, setShowText] = useState(true)
 
- 
+
+ console.log(allItems)
    
   const sendSMSCheck = async () => {
   const isAvailable = await SMS.isAvailableAsync();
@@ -48,6 +49,7 @@ const version = Constants.expoConfig.ios.buildNumber
   }
   try {
     await AsyncStorage.setItem('items', JSON.stringify(items))
+    console.log('Saved items to AsyncStorage:', items);
   } catch (error) {
     console.log(error)
   }
@@ -62,19 +64,58 @@ const version = Constants.expoConfig.ios.buildNumber
   } catch (error) {
     console.log(error)
   }
-}
+  }
+  
+// const loadItems = async () => {
+//   try {
+//     const itemsString = await AsyncStorage.getItem('items');
+//     if (itemsString !== null) {
+//       const parsedItems = JSON.parse(itemsString);
+//       // Ensure that each loaded item has the 'isChecked' property
+//       const itemsWithChecked = parsedItems.map((item) => ({
+//         ...item,
+//         isChecked: item.isChecked === true ? item.isChecked : false,
+//       }));
+//       setAllItems(itemsWithChecked);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-  const submitItem = () => {
-    if (!item) {
- setModalVisible(false)
-} else { 
-      setAllItems([...allItems, { text: item, key: Math.random().toString() }]);
-      saveItems([...allItems, { text: item, key: Math.random().toString() }]);
-      setItem("");
-      setModalVisible(false)
+
+
+
+
+//   const submitItem = () => {
+//     if (!item) {
+//  setModalVisible(false)
+// } else { 
+//       setAllItems([...allItems, { text: item, key: Math.random().toString() }]);
+//       saveItems([...allItems, { text: item, key: Math.random().toString() }]);
+//       setItem("");
+//       setModalVisible(false)
      
-    }
-  };
+//     }
+  //   };
+  
+const submitItem = () => {
+  if (!item) {
+    setModalVisible(false);
+  } else {
+    const newItem = { text: item, key: Math.random().toString(), isChecked: false };
+    setAllItems((prevItems) => {
+      const updatedItems = [...prevItems, newItem];
+      saveItems(updatedItems);
+      console.log("save items ran")
+      return updatedItems;
+    });
+    setItem('');
+    setModalVisible(false);
+  }
+};
+
+
 
   const itemInputHandler = (itemText) => {
     setItem(itemText);
@@ -142,7 +183,7 @@ const version = Constants.expoConfig.ios.buildNumber
           <Button buttonStyle={styles.button} title="Add Item" onPress={startAddItem} />
          </View>
       </View>
-        <ListInput submitItem={submitItem} itemInputHandler={itemInputHandler} item={item} modalVisible={modalVisible} startAddItem={startAddItem} />
+          <ListInput submitItem={submitItem} itemInputHandler={itemInputHandler} item={item} modalVisible={modalVisible}  startAddItem={startAddItem} />
       <View style={styles.buttonContainer}>
         <View style={styles.buttonErase}>
         </View>
@@ -151,7 +192,7 @@ const version = Constants.expoConfig.ios.buildNumber
         <FlatList
           data={allItems}
           renderItem={(data) => {
-            return <ListItem data={data.item} handleDeleteItem={handleDeleteItem}/>;
+            return <ListItem data={data.item} setAllItems={setAllItems} allItems={allItems} handleDeleteItem={handleDeleteItem} saveItems={saveItems}/>;
           }}
             />
           </View>
